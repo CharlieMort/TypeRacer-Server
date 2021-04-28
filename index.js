@@ -69,12 +69,20 @@ function PlayerConnect(socket, nick) {
 
 async function CreateRoom(socket) {
     let roomCode = CreateRoomCode(5);
-    rooms[roomCode] = {...roomSchema};
+    rooms[roomCode] = {
+        players: [],
+        text: "",
+        code: "",
+        nextPlace: 1,
+        start: false
+    };
     rooms[roomCode].code = roomCode;
     let txt = await GetTextFromApi();
     rooms[roomCode].text = txt;
     JoinRoom(roomCode, socket, true);
     io.in(roomCode).emit("RoomInfo", rooms[roomCode]);
+    console.log("\n ----------------------------ROOMS-----------------------------");
+    console.log(JSON.stringify(rooms, null, 2));
 }
 
 function JoinRoom(roomCode, socket, isHost) {
@@ -165,3 +173,6 @@ io.on("connection", (socket) => {
 
 server.listen(PORT, () => console.log(`Server Listening On Port ${PORT}`));
 //app.listen(PORT, () => console.log(`Server Listening On Port ${PORT}`));
+
+
+
