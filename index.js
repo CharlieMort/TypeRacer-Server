@@ -106,7 +106,7 @@ function Disconnect(socket) {
 
 function UpdateWinner(roomCode, socket) {
     for (let player of rooms[roomCode].players) {
-        if (player.id === socket.id) {
+        if (player.id === socket.id && player.place === "") {
             player.place = "Finished " + rooms[roomCode].nextPlace;
             rooms[roomCode].nextPlace ++;
         }
