@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const socketIO = require("socket.io");
 const http = require("http");
 const cors = require("cors");
@@ -7,14 +6,15 @@ const axios = require("axios");
 const path = require("path");
 
 const PORT = process.env.PORT || 5000;
+const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, './build')));
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './build/index.html'));
 });
 
 const server = http.createServer(app);
